@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ҷадвали дарҳои факултети МТН</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="img/khogu_logo.png" alt="Логотипи ДДХ" class="logo-img">
+            <div class="logo-text">
+                <strong>ДДХ</strong><br>
+                <small>ба номи М.Назаршоев</small>
+            </div>
+        </div>
+        
+        <div class="faculty-banner">
+            ФАКУЛТЕТИ МАТЕМАТИКА ВА ТЕХНОЛОГИЯИ НАВ
+        </div>
+
+        <nav class="main-nav">
+            <button class="nav-btn btn-news" onclick="toggleSidebar(true)">📢 Навгониҳо</button>
+            <button class="nav-btn btn-admin" onclick="openAdminPanel()">⚡ Админ</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <section class="tech-filters">
+            <div class="filter-group">
+                <label>Курсро интихоб кунед</label>
+                <select id="course-select">
+                    <option value="all">Ҳамаи курсҳо</option>
+                    <option value="1">Курси 1</option>
+                    <option value="2">Курси 2</option>
+                    <option value="3">Курси 3</option>
+                    <option value="4">Курси 4</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Гурӯҳро интихоб кунед</label>
+                <select id="group-select">
+                    <option value="all">Ҳамаи гурӯҳҳо</option>
+                    <option value="Математикаи амалӣ">Математикаи амалӣ</option>
+                    <option value="Математикаи умумӣ">Математикаи умумӣ</option>
+                    <option value="Информатика">Информатика</option>
+                    <option value="Физика">Физика</option>
+                    <option value="Астрономия">Астрономия</option>
+                    <option value="Амнияти компютерӣ">Амнияти компютерӣ</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Омӯзгорро интихоб кунед</label>
+                <select id="teacher-select">
+                    <option value="all">Ҳамаи омӯзгорон</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Фанро интихоб кунед</label>
+                <select id="subject-select">
+                    <option value="all">Ҳамаи фанҳо</option>
+                </select>
+            </div>
+        </section>
+
+        <h2 class="table-status-title" id="schedule-view-title">МАТРИТСАИ УМУМИИ ФАКУЛТЕТ</h2>
+
+        <div class="matrix-container">
+            <div class="matrix-grid" id="matrix-grid"></div>
+        </div>
+    </main>
+
+    <aside id="news-sidebar" class="news-sidebar">
+        <div class="sidebar-header">
+            <h3>Эълонҳо ва Навгониҳо</h3>
+            <button class="close-sidebar-btn" onclick="toggleSidebar(false)">&times;</button>
+        </div>
+        <div id="news-container" class="sidebar-body"></div>
+    </aside>
+
+    <section id="admin-panel" class="admin-modal" style="display: none;">
+        <div class="admin-content">
+            <span class="close-modal-btn" onclick="closeAdminPanel()">&times;</span>
+            
+            <div class="admin-tabs">
+                <button id="tab-schedule-btn" class="tab-btn active" onclick="switchAdminTab('schedule')">Таҳрири Ҷадвал</button>
+                <button id="tab-news-btn" class="tab-btn" onclick="switchAdminTab('news')">Иловаи Навгонӣ</button>
+            </div>
+
+            <form id="admin-schedule-form" class="admin-subform">
+                <div class="form-grid">
+                    <div class="form-group"><label>Рӯз:</label><select id="admin-day" required></select></div>
+                    <div class="form-group"><label>Гурӯҳ:</label><select id="admin-group" required></select></div>
+                    <div class="form-group"><label>Соати дарсӣ:</label><select id="admin-pair" required></select></div>
+                    
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Номи фан:</label>
+                        <div class="select-with-btn">
+                            <select id="admin-subject" required></select>
+                            <button type="button" class="add-inline-btn" onclick="promptNewSubject()" title="Иловаи фанни нав">+</button>
+                            <button type="button" onclick="deleteSelectedSubject()" style="background-color: #dc3545;">Тоза кардан</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Намуд:</label>
+                        <select id="admin-type">
+                            <option value="Лексия">Лексия</option>
+                            <option value="Практика">Практика</option>
+                            <option value="Лаборатория">Лабораторӣ</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Миқдори кредитҳо:</label><input type="number" id="admin-credits" min="1" max="6" value="3" required></div>
+                    
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Омӯзгор:</label>
+                        <div class="select-with-btn">
+                            <select id="admin-teacher" required></select>
+                            <button type="button" class="add-inline-btn" onclick="promptNewTeacher()" title="Иловаи омӯзгори нав">+</button>
+                            <button type="button" onclick="deleteSelectedTeacher()" style="background-color: #dc3545;">Тоза кардан</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group"><label>Аудитория:</label><input type="text" id="admin-room"></div>
+                </div>
+                <button type="submit" class="cyber-btn">Сабти дарс</button>
+            </form>
+
+            <form id="admin-news-form" class="admin-subform" style="display: none;">
+                <div class="form-group">
+                    <label>Сарлавҳаи эълон:</label>
+                    <input type="text" id="news-title-input" required placeholder="Масалан: Ҷаласаи илмӣ">
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Матни эълон:</label>
+                    <textarea id="news-content-input" rows="5" required placeholder="Матнро ворид кунед..."></textarea>
+                </div>
+                <button type="submit" class="cyber-btn neon-purple">Интишори эълон</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
