@@ -1,4 +1,4 @@
-const ADMIN_PASSWORD = "ХГУ2026";
+const ADMIN_PASSWORD = "2026";
 
 // --- УМНАЯ ИНЪЕКЦИЯ СТИЛЕЙ И КОРРЕКЦИЯ ИНТЕРФЕЙСА ---
 const runtimeStyle = document.createElement('style');
